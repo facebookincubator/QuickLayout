@@ -99,12 +99,12 @@ Row alignment overrides the vertical alignment for every view in a row. This is 
 ```swift
 var body: Layout {
   Grid {
-    GridRow {
+    GridRow(alignment: .top) {
       view1
       view2
       view3
     }
-    GridRow(alignment: .bottom) {
+    GridRow {
       view4
       view5
       view6
@@ -132,10 +132,6 @@ var body: Layout {
     GridRow {
       view3
       view4
-    }
-    GridRow {
-      view5
-      view6
     }
   }
 }
