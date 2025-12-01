@@ -5,21 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import QuickLayoutMacro
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
+import MacroTesting
+#if canImport(QuickLayoutMacro)
+@testable import QuickLayoutMacro
 
 // patternlint-disable meta-subclass-view
 
-let testMacros: [String: Macro.Type] = [
-  "QuickLayout": QuickLayout.self,
-  "_QuickLayoutInjection": QuickLayoutInjection.self,
-]
-
 class QuickLayoutTests: XCTestCase {
+  override func invokeTest() {
+    withMacroTesting(
+      record: .failed,
+      macros: [
+        "QuickLayout": QuickLayout.self,
+        "_QuickLayoutInjection": QuickLayoutInjection.self,
+      ]
+    ) {
+      super.invokeTest()
+    }
+  }
+
   func testBasicMacroExpansion() throws {
-    assertMacroExpansion(
+    assertMacro {
       #"""
       @QuickLayout
       class TestView: UIView {
@@ -27,44 +36,42 @@ class QuickLayoutTests: XCTestCase {
           EmptyLayout()
         }
       }
-      """#,
-      expandedSource:
-        #"""
-        class TestView: UIView {
-          @LayoutBuilder
-          var body: Layout {
-            EmptyLayout()
-          }
-
-          public override func willMove(toWindow newWindow: UIWindow?) {
-            super.willMove(toWindow: newWindow)
-            _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
-          }
-
-          public override func layoutSubviews() {
-            super.layoutSubviews()
-            _QuickLayoutViewImplementation.layoutSubviews(self)
-          }
-
-          public override func sizeThatFits(_ size: CGSize) -> CGSize {
-            return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
-          }
-
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
-            return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
-          }
+      """#
+    } expansion: {
+      #"""
+      class TestView: UIView {
+        @LayoutBuilder
+        var body: Layout {
+          EmptyLayout()
         }
 
-        extension TestView: HasBody {
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
         }
-        """#,
-      macros: testMacros,
-      indentationWidth: .spaces(2)
-    )
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          _QuickLayoutViewImplementation.layoutSubviews(self)
+        }
+
+        public override func sizeThatFits(_ size: CGSize) -> CGSize {
+          return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
+        }
+
+        public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
+        }
+      }
+
+      extension TestView: HasBody {
+      }
+      """#
+    }
   }
 
   func testApplicableMethodsDeferToProvidedImplementation() throws {
-    assertMacroExpansion(
+    assertMacro {
       #"""
       @QuickLayout
       class TestView: UIView {
@@ -80,44 +87,43 @@ class QuickLayoutTests: XCTestCase {
           return uniqueFlexibilityValue
         }
       }
-      """#,
-      expandedSource:
-        #"""
-        class TestView: UIView {
-          @LayoutBuilder
-          var body: Layout {
-            EmptyLayout()
-          }
-
-          public func sizeThatFits(_ size: CGSize) -> CGSize {
-            return uniqueSizeValue
-          }
-
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
-            return uniqueFlexibilityValue
-          }
-
-          public override func willMove(toWindow newWindow: UIWindow?) {
-            super.willMove(toWindow: newWindow)
-            _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
-          }
-
-          public override func layoutSubviews() {
-            super.layoutSubviews()
-            _QuickLayoutViewImplementation.layoutSubviews(self)
-          }
+      """#
+    } expansion: {
+      #"""
+      class TestView: UIView {
+        @LayoutBuilder
+        var body: Layout {
+          EmptyLayout()
         }
 
-        extension TestView: HasBody {
+        public func sizeThatFits(_ size: CGSize) -> CGSize {
+          return uniqueSizeValue
         }
-        """#,
-      macros: testMacros,
-      indentationWidth: .spaces(2)
-    )
+
+        public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          return uniqueFlexibilityValue
+        }
+
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
+        }
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          _QuickLayoutViewImplementation.layoutSubviews(self)
+        }
+      }
+
+      extension TestView: HasBody {
+      }
+      """#
+    }
   }
 
   func testApplicableMethodsInjectQuickLayoutBridgeementation() throws {
-    assertMacroExpansion(
+#if compiler(>=6)
+    assertMacro {
       #"""
       @QuickLayout
       class TestView: UIView {
@@ -135,46 +141,143 @@ class QuickLayoutTests: XCTestCase {
           someUniqueLayoutSubviewsLogic()
         }
       }
-      """#,
-      expandedSource:
-        #"""
-        class TestView: UIView {
-          @LayoutBuilder
-          var body: Layout {
-            EmptyLayout()
-          }
-
-          public override func willMove(toWindow newWindow: UIWindow?) {
-            super.willMove(toWindow: newWindow)
-            _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
-            someUniqueWillMoveToWindowLogic()
-          }
-
-          public override func layoutSubviews() {
-            super.layoutSubviews()
-            _QuickLayoutViewImplementation.layoutSubviews(self)
-            someUniqueLayoutSubviewsLogic()
-          }
-
-          public override func sizeThatFits(_ size: CGSize) -> CGSize {
-            return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
-          }
-
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
-            return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
-          }
+      """#
+    } expansion: {
+      #"""
+      class TestView: UIView {
+        @LayoutBuilder
+        var body: Layout {
+          EmptyLayout()
         }
 
-        extension TestView: HasBody {
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
+          someUniqueWillMoveToWindowLogic()
         }
-        """#,
-      macros: testMacros,
-      indentationWidth: .spaces(2)
-    )
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          _QuickLayoutViewImplementation.layoutSubviews(self)
+          someUniqueLayoutSubviewsLogic()
+        }
+
+        public override func sizeThatFits(_ size: CGSize) -> CGSize {
+          return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
+        }
+
+        public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
+        }
+      }
+
+      extension TestView: HasBody {
+      }
+      """#
+    }
+#else
+    assertMacro {
+      #"""
+      @QuickLayout
+      class TestView: UIView {
+        var body: Layout {
+          EmptyLayout()
+        }
+
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          someUniqueWillMoveToWindowLogic()
+        }
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          someUniqueLayoutSubviewsLogic()
+        }
+      }
+      """#
+    } diagnostics: {
+     """
+     @QuickLayout
+     class TestView: UIView {
+       var body: Layout {
+         EmptyLayout()
+       }
+
+       public override func willMove(toWindow newWindow: UIWindow?) {
+       ╰─ 🛑 方法 'willMove' 缺少必要的实现调用。在 Swift 6.0 以下，你必须手动添加以下调用：
+     _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
+         super.willMove(toWindow: newWindow)
+         someUniqueWillMoveToWindowLogic()
+       }
+
+       public override func layoutSubviews() {
+       ╰─ 🛑 方法 'layoutSubviews' 缺少必要的实现调用。在 Swift 6.0 以下，你必须手动添加以下调用：
+     _QuickLayoutViewImplementation.layoutSubviews(self)
+         super.layoutSubviews()
+         someUniqueLayoutSubviewsLogic()
+       }
+     }
+     """
+    }
+    assertMacro {
+      #"""
+      @QuickLayout
+      class TestView: UIView {
+        var body: Layout {
+          EmptyLayout()
+        }
+
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
+          someUniqueWillMoveToWindowLogic()
+        }
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          _QuickLayoutViewImplementation.layoutSubviews(self)
+          someUniqueLayoutSubviewsLogic()
+        }
+      }
+      """#
+    } expansion: {
+     """
+     class TestView: UIView {
+       @LayoutBuilder
+       var body: Layout {
+         EmptyLayout()
+       }
+
+       public override func willMove(toWindow newWindow: UIWindow?) {
+         super.willMove(toWindow: newWindow)
+         _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
+         someUniqueWillMoveToWindowLogic()
+       }
+
+       public override func layoutSubviews() {
+         super.layoutSubviews()
+         _QuickLayoutViewImplementation.layoutSubviews(self)
+         someUniqueLayoutSubviewsLogic()
+       }
+
+       public override func sizeThatFits(_ size: CGSize) -> CGSize {
+         return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
+       }
+
+       public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+         return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
+       }
+     }
+
+     extension TestView: HasBody {
+     }
+     """
+    }
+#endif
   }
 
   func testTypeScopedFunctionsDoNotConflict() throws {
-    assertMacroExpansion(
+    assertMacro {
       #"""
       @QuickLayout
       class TestView: UIView {
@@ -186,48 +289,46 @@ class QuickLayoutTests: XCTestCase {
           return uniqueSizeValue
         }
       }
-      """#,
-      expandedSource:
-        #"""
-        class TestView: UIView {
-          @LayoutBuilder
-          var body: Layout {
-            EmptyLayout()
-          }
-
-          static func sizeThatFits(_ size: CGSize) -> CGSize {
-            return uniqueSizeValue
-          }
-
-          public override func willMove(toWindow newWindow: UIWindow?) {
-            super.willMove(toWindow: newWindow)
-            _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
-          }
-
-          public override func layoutSubviews() {
-            super.layoutSubviews()
-            _QuickLayoutViewImplementation.layoutSubviews(self)
-          }
-
-          public override func sizeThatFits(_ size: CGSize) -> CGSize {
-            return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
-          }
-
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
-            return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
-          }
+      """#
+    } expansion: {
+      #"""
+      class TestView: UIView {
+        @LayoutBuilder
+        var body: Layout {
+          EmptyLayout()
         }
 
-        extension TestView: HasBody {
+        static func sizeThatFits(_ size: CGSize) -> CGSize {
+          return uniqueSizeValue
         }
-        """#,
-      macros: testMacros,
-      indentationWidth: .spaces(2)
-    )
+
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
+        }
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          _QuickLayoutViewImplementation.layoutSubviews(self)
+        }
+
+        public override func sizeThatFits(_ size: CGSize) -> CGSize {
+          return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
+        }
+
+        public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
+        }
+      }
+
+      extension TestView: HasBody {
+      }
+      """#
+    }
   }
 
   func testOverloadedFunctionsDoNotConflict() throws {
-    assertMacroExpansion(
+    assertMacro {
       #"""
       @QuickLayout
       class TestView: UIView {
@@ -239,48 +340,46 @@ class QuickLayoutTests: XCTestCase {
           return uniqueSizeValue
         }
       }
-      """#,
-      expandedSource:
-        #"""
-        class TestView: UIView {
-          @LayoutBuilder
-          var body: Layout {
-            EmptyLayout()
-          }
-
-          func sizeThatFits(_ size: CGSize) -> NotACGSize {
-            return uniqueSizeValue
-          }
-
-          public override func willMove(toWindow newWindow: UIWindow?) {
-            super.willMove(toWindow: newWindow)
-            _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
-          }
-
-          public override func layoutSubviews() {
-            super.layoutSubviews()
-            _QuickLayoutViewImplementation.layoutSubviews(self)
-          }
-
-          public override func sizeThatFits(_ size: CGSize) -> CGSize {
-            return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
-          }
-
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
-            return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
-          }
+      """#
+    } expansion: {
+      #"""
+      class TestView: UIView {
+        @LayoutBuilder
+        var body: Layout {
+          EmptyLayout()
         }
 
-        extension TestView: HasBody {
+        func sizeThatFits(_ size: CGSize) -> NotACGSize {
+          return uniqueSizeValue
         }
-        """#,
-      macros: testMacros,
-      indentationWidth: .spaces(2)
-    )
+
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
+        }
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          _QuickLayoutViewImplementation.layoutSubviews(self)
+        }
+
+        public override func sizeThatFits(_ size: CGSize) -> CGSize {
+          return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
+        }
+
+        public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
+        }
+      }
+
+      extension TestView: HasBody {
+      }
+      """#
+    }
   }
 
   func testParameterMismatchedFunctionsDoNotConflict() throws {
-    assertMacroExpansion(
+    assertMacro {
       #"""
       @QuickLayout
       class TestView: UIView {
@@ -292,48 +391,46 @@ class QuickLayoutTests: XCTestCase {
           return uniqueSizeValue
         }
       }
-      """#,
-      expandedSource:
-        #"""
-        class TestView: UIView {
-          @LayoutBuilder
-          var body: Layout {
-            EmptyLayout()
-          }
-
-          func sizeThatFits(_ notASize: NotACGSize) -> CGSize {
-            return uniqueSizeValue
-          }
-
-          public override func willMove(toWindow newWindow: UIWindow?) {
-            super.willMove(toWindow: newWindow)
-            _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
-          }
-
-          public override func layoutSubviews() {
-            super.layoutSubviews()
-            _QuickLayoutViewImplementation.layoutSubviews(self)
-          }
-
-          public override func sizeThatFits(_ size: CGSize) -> CGSize {
-            return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
-          }
-
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
-            return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
-          }
+      """#
+    } expansion: {
+      #"""
+      class TestView: UIView {
+        @LayoutBuilder
+        var body: Layout {
+          EmptyLayout()
         }
 
-        extension TestView: HasBody {
+        func sizeThatFits(_ notASize: NotACGSize) -> CGSize {
+          return uniqueSizeValue
         }
-        """#,
-      macros: testMacros,
-      indentationWidth: .spaces(2)
-    )
+
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
+        }
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          _QuickLayoutViewImplementation.layoutSubviews(self)
+        }
+
+        public override func sizeThatFits(_ size: CGSize) -> CGSize {
+          return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
+        }
+
+        public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
+        }
+      }
+
+      extension TestView: HasBody {
+      }
+      """#
+    }
   }
 
   func testLayoutBuilderAttributeNotAddedIfPresent() throws {
-    assertMacroExpansion(
+    assertMacro {
       #"""
       @QuickLayout
       class TestView: UIView {
@@ -342,44 +439,42 @@ class QuickLayoutTests: XCTestCase {
           EmptyLayout()
         }
       }
-      """#,
-      expandedSource:
-        #"""
-        class TestView: UIView {
-          @LayoutBuilder
-          var body: Layout {
-            EmptyLayout()
-          }
-
-          public override func willMove(toWindow newWindow: UIWindow?) {
-            super.willMove(toWindow: newWindow)
-            _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
-          }
-
-          public override func layoutSubviews() {
-            super.layoutSubviews()
-            _QuickLayoutViewImplementation.layoutSubviews(self)
-          }
-
-          public override func sizeThatFits(_ size: CGSize) -> CGSize {
-            return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
-          }
-
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
-            return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
-          }
+      """#
+    } expansion: {
+      #"""
+      class TestView: UIView {
+        @LayoutBuilder
+        var body: Layout {
+          EmptyLayout()
         }
 
-        extension TestView: HasBody {
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
         }
-        """#,
-      macros: testMacros,
-      indentationWidth: .spaces(2)
-    )
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          _QuickLayoutViewImplementation.layoutSubviews(self)
+        }
+
+        public override func sizeThatFits(_ size: CGSize) -> CGSize {
+          return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
+        }
+
+        public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
+        }
+      }
+
+      extension TestView: HasBody {
+      }
+      """#
+    }
   }
 
   func testLayoutBuilderAttributeOnlyAddedToBody() throws {
-    assertMacroExpansion(
+    assertMacro {
       #"""
       @QuickLayout
       class TestView: UIView {
@@ -391,48 +486,46 @@ class QuickLayoutTests: XCTestCase {
           EmptyLayout()
         }
       }
-      """#,
-      expandedSource:
-        #"""
-        class TestView: UIView {
-          @LayoutBuilder
-          var body: Layout {
-            EmptyLayout()
-          }
-
-          var notBody: Layout {
-            EmptyLayout()
-          }
-
-          public override func willMove(toWindow newWindow: UIWindow?) {
-            super.willMove(toWindow: newWindow)
-            _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
-          }
-
-          public override func layoutSubviews() {
-            super.layoutSubviews()
-            _QuickLayoutViewImplementation.layoutSubviews(self)
-          }
-
-          public override func sizeThatFits(_ size: CGSize) -> CGSize {
-            return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
-          }
-
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
-            return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
-          }
+      """#
+    } expansion: {
+      #"""
+      class TestView: UIView {
+        @LayoutBuilder
+        var body: Layout {
+          EmptyLayout()
         }
 
-        extension TestView: HasBody {
+        var notBody: Layout {
+          EmptyLayout()
         }
-        """#,
-      macros: testMacros,
-      indentationWidth: .spaces(2)
-    )
+
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
+        }
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          _QuickLayoutViewImplementation.layoutSubviews(self)
+        }
+
+        public override func sizeThatFits(_ size: CGSize) -> CGSize {
+          return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
+        }
+
+        public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
+        }
+      }
+
+      extension TestView: HasBody {
+      }
+      """#
+    }
   }
 
   func testLayoutBuilderAttributeAppliesToAnyLayout() throws {
-    assertMacroExpansion(
+    assertMacro {
       #"""
       @QuickLayout
       class TestView: UIView {
@@ -440,39 +533,38 @@ class QuickLayoutTests: XCTestCase {
           EmptyLayout()
         }
       }
-      """#,
-      expandedSource:
-        #"""
-        class TestView: UIView {
-          @LayoutBuilder
-          var body: any Layout {
-            EmptyLayout()
-          }
-
-          public override func willMove(toWindow newWindow: UIWindow?) {
-            super.willMove(toWindow: newWindow)
-            _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
-          }
-
-          public override func layoutSubviews() {
-            super.layoutSubviews()
-            _QuickLayoutViewImplementation.layoutSubviews(self)
-          }
-
-          public override func sizeThatFits(_ size: CGSize) -> CGSize {
-            return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
-          }
-
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
-            return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
-          }
+      """#
+    } expansion: {
+      #"""
+      class TestView: UIView {
+        @LayoutBuilder
+        var body: any Layout {
+          EmptyLayout()
         }
 
-        extension TestView: HasBody {
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
         }
-        """#,
-      macros: testMacros,
-      indentationWidth: .spaces(2)
-    )
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          _QuickLayoutViewImplementation.layoutSubviews(self)
+        }
+
+        public override func sizeThatFits(_ size: CGSize) -> CGSize {
+          return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
+        }
+
+        public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
+        }
+      }
+
+      extension TestView: HasBody {
+      }
+      """#
+    }
   }
 }
+#endif

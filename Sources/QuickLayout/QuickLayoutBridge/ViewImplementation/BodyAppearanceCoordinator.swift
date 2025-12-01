@@ -12,7 +12,7 @@ private let disappearanceAnimationKey = "BodyAppearanceCoordinator-disappearance
 private let disappearanceAnimationIDKey = "BodyAppearanceCoordinator-disappearance-id"
 
 @MainActor
-final class BodyAppearanceCoordinator: NSObject, @preconcurrency CAAnimationDelegate {
+final class BodyAppearanceCoordinator: NSObject {
   private var disappearanceAnimationID: Int = 0
   private var appearingViews: Set<UIView> = []
   private var activeViews: Set<UIView> = []
@@ -123,3 +123,9 @@ fileprivate extension UIView {
     animationKeys.forEach { layer.removeAnimation(forKey: $0) }
   }
 }
+
+#if compiler(>=6)
+extension BodyAppearanceCoordinator: @preconcurrency CAAnimationDelegate {}
+#else
+extension BodyAppearanceCoordinator: CAAnimationDelegate {}
+#endif

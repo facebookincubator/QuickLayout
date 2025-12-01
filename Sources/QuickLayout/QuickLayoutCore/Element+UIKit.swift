@@ -22,8 +22,13 @@ private func sanitizeSize(_ size: CGSize) -> CGSize {
 }
 
 // patternlint-disable-next-line retroactive-conformance-systemlib
-extension UIView: @preconcurrency LeafElement {
+#if compiler(>=6)
+extension UIView: @preconcurrency LeafElement {}
+#else
+extension UIView: LeafElement {}
+#endif
 
+extension UIView {
   public func quick_layoutThatFits(_ proposedSize: CGSize) -> LayoutNode {
     assert(Thread.isMainThread, "UIViews can be laid out only on the main thread.")
 

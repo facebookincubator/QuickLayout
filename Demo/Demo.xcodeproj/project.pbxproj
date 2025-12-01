@@ -3,27 +3,52 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E18AC1B2EC0EA5E00BC420B /* HelloWorldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC1C2EC0EA5E00BC420B /* HelloWorldView.swift */; };
+		0E18AC1D2EC0EA5E00BC420B /* StateManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC1E2EC0EA5E00BC420B /* StateManagementView.swift */; };
+		0E18AC1F2EC0EA5E00BC420B /* UpdatingWithAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC202EC0EA5E00BC420B /* UpdatingWithAnimationView.swift */; };
+		0E18AC212EC0EA5E00BC420B /* BarsCardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC222EC0EA5E00BC420B /* BarsCardViewCell.swift */; };
+		0E18AC232EC0EA5E00BC420B /* BarsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC242EC0EA5E00BC420B /* BarsListViewController.swift */; };
+		0E18AC252EC0EA5E00BC420B /* BarsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC262EC0EA5E00BC420B /* BarsModels.swift */; };
+		0E18AC272EC0EA5E00BC420B /* AlignmentGuidesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC282EC0EA5E00BC420B /* AlignmentGuidesView.swift */; };
+		0E18AC292EC0EA5E00BC420B /* CustomAlignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC2A2EC0EA5E00BC420B /* CustomAlignmentView.swift */; };
+		0E18AC2B2EC0EA5E00BC420B /* EmojiAlignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC2C2EC0EA5E00BC420B /* EmojiAlignmentView.swift */; };
+		0E18AC2D2EC0EA5E00BC420B /* FirstLabelAlignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC2E2EC0EA5E00BC420B /* FirstLabelAlignmentView.swift */; };
+		0E18AC2F2EC0EA5E00BC420B /* FruitSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC302EC0EA5E00BC420B /* FruitSelectorView.swift */; };
+		0E18AC312EC0EA5E00BC420B /* AdvanceSizingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC322EC0EA5E00BC420B /* AdvanceSizingContainerView.swift */; };
+		0E18AC332EC0EA5E00BC420B /* AdvanceSizingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC342EC0EA5E00BC420B /* AdvanceSizingView.swift */; };
+		0E18AC352EC0EA5E00BC420B /* LazyInstantiationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC362EC0EA5E00BC420B /* LazyInstantiationView.swift */; };
+		0E18AC372EC0EA5E00BC420B /* MobileConfigMigrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC382EC0EA5E00BC420B /* MobileConfigMigrationView.swift */; };
+		0E18AC392EC0EA5E00BC420B /* GridLayoutExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC3A2EC0EA5E00BC420B /* GridLayoutExampleView.swift */; };
+		0E18AC3B2EC0EA5E00BC420B /* QuickLayoutShowcaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AC3C2EC0EA5E00BC420B /* QuickLayoutShowcaseApp.swift */; };
 		0E56B79C2EBCE521004F79FC /* QuickLayoutShowcaseAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E56B79B2EBCE521004F79FC /* QuickLayoutShowcaseAssets.xcassets */; };
 		0E6E97342EB93FDF0030E0DA /* QuickLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 0E6E97332EB93FDF0030E0DA /* QuickLayout */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E18AC1C2EC0EA5E00BC420B /* HelloWorldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldView.swift; sourceTree = "<group>"; };
+		0E18AC1E2EC0EA5E00BC420B /* StateManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManagementView.swift; sourceTree = "<group>"; };
+		0E18AC202EC0EA5E00BC420B /* UpdatingWithAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatingWithAnimationView.swift; sourceTree = "<group>"; };
+		0E18AC222EC0EA5E00BC420B /* BarsCardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsCardViewCell.swift; sourceTree = "<group>"; };
+		0E18AC242EC0EA5E00BC420B /* BarsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsListViewController.swift; sourceTree = "<group>"; };
+		0E18AC262EC0EA5E00BC420B /* BarsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsModels.swift; sourceTree = "<group>"; };
+		0E18AC282EC0EA5E00BC420B /* AlignmentGuidesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignmentGuidesView.swift; sourceTree = "<group>"; };
+		0E18AC2A2EC0EA5E00BC420B /* CustomAlignmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlignmentView.swift; sourceTree = "<group>"; };
+		0E18AC2C2EC0EA5E00BC420B /* EmojiAlignmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiAlignmentView.swift; sourceTree = "<group>"; };
+		0E18AC2E2EC0EA5E00BC420B /* FirstLabelAlignmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLabelAlignmentView.swift; sourceTree = "<group>"; };
+		0E18AC302EC0EA5E00BC420B /* FruitSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitSelectorView.swift; sourceTree = "<group>"; };
+		0E18AC322EC0EA5E00BC420B /* AdvanceSizingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvanceSizingContainerView.swift; sourceTree = "<group>"; };
+		0E18AC342EC0EA5E00BC420B /* AdvanceSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvanceSizingView.swift; sourceTree = "<group>"; };
+		0E18AC362EC0EA5E00BC420B /* LazyInstantiationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyInstantiationView.swift; sourceTree = "<group>"; };
+		0E18AC382EC0EA5E00BC420B /* MobileConfigMigrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileConfigMigrationView.swift; sourceTree = "<group>"; };
+		0E18AC3A2EC0EA5E00BC420B /* GridLayoutExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayoutExampleView.swift; sourceTree = "<group>"; };
+		0E18AC3C2EC0EA5E00BC420B /* QuickLayoutShowcaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLayoutShowcaseApp.swift; sourceTree = "<group>"; };
 		0E56B79B2EBCE521004F79FC /* QuickLayoutShowcaseAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = QuickLayoutShowcaseAssets.xcassets; path = ../Sources/QuickLayout/QuickLayoutShowcaseAssets.xcassets; sourceTree = SOURCE_ROOT; };
 		0E6E96F72EB93F9C0030E0DA /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		0E18AC1A2EC0EA5E00BC420B /* __showcase__ */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			name = __showcase__;
-			path = ../Sources/QuickLayout/QuickLayout/__showcase__;
-			sourceTree = SOURCE_ROOT;
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		0E6E96F42EB93F9C0030E0DA /* Frameworks */ = {
@@ -37,6 +62,103 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E18AC1A2EC0EA5E00BC420B /* __showcase__ */ = {
+			isa = PBXGroup;
+			children = (
+				0E18AC3C2EC0EA5E00BC420B /* QuickLayoutShowcaseApp.swift */,
+				0E18AC1B2EC0EA5E00BC420C /* 1-HelloWorld */,
+				0E18AC1D2EC0EA5E00BC420C /* 2-StateManagementView */,
+				0E18AC1F2EC0EA5E00BC420C /* 3-Animations */,
+				0E18AC212EC0EA5E00BC420C /* 4-ListExample */,
+				0E18AC272EC0EA5E00BC420C /* 5-Alignment */,
+				0E18AC312EC0EA5E00BC420C /* 6-AdvanceSizing */,
+				0E18AC352EC0EA5E00BC420C /* 7-LazyView */,
+				0E18AC372EC0EA5E00BC420C /* 8-MobileConfigMigrationView */,
+				0E18AC392EC0EA5E00BC420C /* 9-LayoutContainers */,
+			);
+			name = __showcase__;
+			path = ../Sources/QuickLayout/QuickLayout/__showcase__;
+			sourceTree = SOURCE_ROOT;
+		};
+		0E18AC1B2EC0EA5E00BC420C /* 1-HelloWorld */ = {
+			isa = PBXGroup;
+			children = (
+				0E18AC1C2EC0EA5E00BC420B /* HelloWorldView.swift */,
+			);
+			path = "1-HelloWorld";
+			sourceTree = "<group>";
+		};
+		0E18AC1D2EC0EA5E00BC420C /* 2-StateManagementView */ = {
+			isa = PBXGroup;
+			children = (
+				0E18AC1E2EC0EA5E00BC420B /* StateManagementView.swift */,
+			);
+			path = "2-StateManagementView";
+			sourceTree = "<group>";
+		};
+		0E18AC1F2EC0EA5E00BC420C /* 3-Animations */ = {
+			isa = PBXGroup;
+			children = (
+				0E18AC202EC0EA5E00BC420B /* UpdatingWithAnimationView.swift */,
+			);
+			path = "3-Animations";
+			sourceTree = "<group>";
+		};
+		0E18AC212EC0EA5E00BC420C /* 4-ListExample */ = {
+			isa = PBXGroup;
+			children = (
+				0E18AC222EC0EA5E00BC420B /* BarsCardViewCell.swift */,
+				0E18AC242EC0EA5E00BC420B /* BarsListViewController.swift */,
+				0E18AC262EC0EA5E00BC420B /* BarsModels.swift */,
+			);
+			path = "4-ListExample";
+			sourceTree = "<group>";
+		};
+		0E18AC272EC0EA5E00BC420C /* 5-Alignment */ = {
+			isa = PBXGroup;
+			children = (
+				0E18AC282EC0EA5E00BC420B /* AlignmentGuidesView.swift */,
+				0E18AC2A2EC0EA5E00BC420B /* CustomAlignmentView.swift */,
+				0E18AC2C2EC0EA5E00BC420B /* EmojiAlignmentView.swift */,
+				0E18AC2E2EC0EA5E00BC420B /* FirstLabelAlignmentView.swift */,
+				0E18AC302EC0EA5E00BC420B /* FruitSelectorView.swift */,
+			);
+			path = "5-Alignment";
+			sourceTree = "<group>";
+		};
+		0E18AC312EC0EA5E00BC420C /* 6-AdvanceSizing */ = {
+			isa = PBXGroup;
+			children = (
+				0E18AC322EC0EA5E00BC420B /* AdvanceSizingContainerView.swift */,
+				0E18AC342EC0EA5E00BC420B /* AdvanceSizingView.swift */,
+			);
+			path = "6-AdvanceSizing";
+			sourceTree = "<group>";
+		};
+		0E18AC352EC0EA5E00BC420C /* 7-LazyView */ = {
+			isa = PBXGroup;
+			children = (
+				0E18AC362EC0EA5E00BC420B /* LazyInstantiationView.swift */,
+			);
+			path = "7-LazyView";
+			sourceTree = "<group>";
+		};
+		0E18AC372EC0EA5E00BC420C /* 8-MobileConfigMigrationView */ = {
+			isa = PBXGroup;
+			children = (
+				0E18AC382EC0EA5E00BC420B /* MobileConfigMigrationView.swift */,
+			);
+			path = "8-MobileConfigMigrationView";
+			sourceTree = "<group>";
+		};
+		0E18AC392EC0EA5E00BC420C /* 9-LayoutContainers */ = {
+			isa = PBXGroup;
+			children = (
+				0E18AC3A2EC0EA5E00BC420B /* GridLayoutExampleView.swift */,
+			);
+			path = "9-LayoutContainers";
+			sourceTree = "<group>";
+		};
 		0E6E96EE2EB93F9C0030E0DA = {
 			isa = PBXGroup;
 			children = (
@@ -77,9 +199,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				0E18AC1A2EC0EA5E00BC420B /* __showcase__ */,
-			);
 			name = Demo;
 			packageProductDependencies = (
 				0E6E97332EB93FDF0030E0DA /* QuickLayout */,
@@ -95,15 +214,16 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2600;
-				LastUpgradeCheck = 2600;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					0E6E96F62EB93F9C0030E0DA = {
-						CreatedOnToolsVersion = 26.0;
+						CreatedOnToolsVersion = 15.4;
 					};
 				};
 			};
 			buildConfigurationList = 0E6E96F22EB93F9C0030E0DA /* Build configuration list for PBXProject "Demo" */;
+			compatibilityVersion = "Xcode 15.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -115,7 +235,6 @@
 			packageReferences = (
 				0E6E97312EB93FCE0030E0DA /* XCLocalSwiftPackageReference "../" */,
 			);
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 0E6E96F82EB93F9C0030E0DA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -141,6 +260,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E18AC1B2EC0EA5E00BC420B /* HelloWorldView.swift in Sources */,
+				0E18AC1D2EC0EA5E00BC420B /* StateManagementView.swift in Sources */,
+				0E18AC1F2EC0EA5E00BC420B /* UpdatingWithAnimationView.swift in Sources */,
+				0E18AC212EC0EA5E00BC420B /* BarsCardViewCell.swift in Sources */,
+				0E18AC232EC0EA5E00BC420B /* BarsListViewController.swift in Sources */,
+				0E18AC252EC0EA5E00BC420B /* BarsModels.swift in Sources */,
+				0E18AC272EC0EA5E00BC420B /* AlignmentGuidesView.swift in Sources */,
+				0E18AC292EC0EA5E00BC420B /* CustomAlignmentView.swift in Sources */,
+				0E18AC2B2EC0EA5E00BC420B /* EmojiAlignmentView.swift in Sources */,
+				0E18AC2D2EC0EA5E00BC420B /* FirstLabelAlignmentView.swift in Sources */,
+				0E18AC2F2EC0EA5E00BC420B /* FruitSelectorView.swift in Sources */,
+				0E18AC312EC0EA5E00BC420B /* AdvanceSizingContainerView.swift in Sources */,
+				0E18AC332EC0EA5E00BC420B /* AdvanceSizingView.swift in Sources */,
+				0E18AC352EC0EA5E00BC420B /* LazyInstantiationView.swift in Sources */,
+				0E18AC372EC0EA5E00BC420B /* MobileConfigMigrationView.swift in Sources */,
+				0E18AC392EC0EA5E00BC420B /* GridLayoutExampleView.swift in Sources */,
+				0E18AC3B2EC0EA5E00BC420B /* QuickLayoutShowcaseApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,7 +335,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -256,7 +392,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -273,13 +409,16 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 98R958M4DW;
 				ENABLE_PREVIEWS = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -288,10 +427,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.meta.SampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -304,6 +440,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 98R958M4DW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -311,6 +448,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -319,10 +457,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.meta.SampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
