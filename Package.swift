@@ -10,52 +10,13 @@
 import CompilerPluginSupport
 import PackageDescription
 
-#if os(iOS) || !os(macOS)
-var QuickLayoutDependencies: [Target.Dependency] = [
-  "QuickLayoutMacro",
-  "QuickLayoutBridge",
-]
-#else
-var QuickLayoutDependencies: [Target.Dependency] = [
-  "QuickLayoutMacro",
-]
-#endif
-
-var targets: [Target] = [
-  .target(
-    name: "QuickLayout",
-    dependencies: QuickLayoutDependencies,
-    path: "Sources/QuickLayout/QuickLayout",
-    exclude: [
-      "__showcase__/"
-    ]
-  ),
-  .macro(
-    name: "QuickLayoutMacro",
-    dependencies: [
-      .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-      .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
-    ],
-    path: "Sources/QuickLayout/QuickLayoutMacro"
-  ),
-  .target(
-    name: "FastResultBuilder",
-    path: "Sources/FastResultBuilder/FastResultBuilder",
-    exclude: [
-      "__tests__/"
-    ]
-  ),
-  .testTarget(
-    name: "QuickLayoutMacroTests",
-    dependencies: [
-      "QuickLayoutMacro",
-      .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-    ],
-    path: "Sources/QuickLayout/QuickLayoutMacroTests"
-  ),
-]
-
-var products: [Product] = [
+let package = Package(
+  name: "QuickLayout",
+  platforms: [
+    .iOS(.v15),
+    .macOS(.v10_15),
+  ],
+  products: [
     .library(
       name: "QuickLayout",
       targets: ["QuickLayout"]
@@ -64,47 +25,61 @@ var products: [Product] = [
       name: "FastResultBuilder",
       targets: ["FastResultBuilder"]
     ),
-]
-
-// iOS-only targets
-#if os(iOS) || !os(macOS)
-targets += [
-  .target(
-    name: "QuickLayoutCore",
-    path: "Sources/QuickLayout/QuickLayoutCore"
-  ),
-  .target(
-    name: "QuickLayoutBridge",
-    dependencies: ["FastResultBuilder", "QuickLayoutCore"],
-    path: "Sources/QuickLayout/QuickLayoutBridge",
-    exclude: [
-      "__server_snapshot_tests__",
-      "__tests__",
-    ]
-  ),
-]
-
-products += [
-    .library(
-      name: "QuickLayoutCore",
-      targets: ["QuickLayoutCore"]
-    ),
-    .library(
-      name: "QuickLayoutBridge",
-      targets: ["QuickLayoutBridge"]
-    ),
-]
-#endif
-
-let package = Package(
-  name: "QuickLayout",
-  platforms: [
-    .iOS(.v15),
-    .macOS(.v10_15),
   ],
-  products: products,
   dependencies: [
     .package(url: "https://github.com/apple/swift-syntax.git", from: "602.0.0"),
+    .package(url: "https://github.com/pointfreeco/swift-macro-testing.git", from: "0.6.4"),
   ],
-  targets: targets
+  targets: [
+    .target(
+      name: "QuickLayout",
+      dependencies: [
+        "QuickLayoutMacro",
+        .target(name: "QuickLayoutBridge", condition: .when(platforms: [.iOS])),
+      ],
+      path: "Sources/QuickLayout/QuickLayout",
+      exclude: [
+        "__showcase__/"
+      ]
+    ),
+    .macro(
+      name: "QuickLayoutMacro",
+      dependencies: [
+        .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+        .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+      ],
+      path: "Sources/QuickLayout/QuickLayoutMacro"
+    ),
+    .target(
+      name: "QuickLayoutCore",
+      path: "Sources/QuickLayout/QuickLayoutCore"
+    ),
+    .target(
+      name: "FastResultBuilder",
+      path: "Sources/FastResultBuilder/FastResultBuilder",
+      exclude: [
+        "__tests__/"
+      ]
+    ),
+    .target(
+      name: "QuickLayoutBridge",
+      dependencies: [
+        "FastResultBuilder",
+        .target(name: "QuickLayoutCore", condition: .when(platforms: [.iOS])),
+      ],
+      path: "Sources/QuickLayout/QuickLayoutBridge",
+      exclude: [
+        "__server_snapshot_tests__",
+        "__tests__",
+      ]
+    ),
+    .testTarget(
+      name: "QuickLayoutMacroTests",
+      dependencies: [
+        "QuickLayoutMacro",
+        .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+      ],
+      path: "Sources/QuickLayout/QuickLayoutMacroTests"
+    )
+  ]
 )
