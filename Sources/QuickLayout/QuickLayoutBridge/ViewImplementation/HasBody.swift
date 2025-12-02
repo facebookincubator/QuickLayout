@@ -72,3 +72,15 @@ extension UITableViewCell {
     return contentView
   }
 }
+
+extension UITableViewHeaderFooterView {
+  override open var bodyContainerView: UIView {
+    return contentView
+  }
+}
+
+extension UIVisualEffectView {
+  override open var bodyContainerView: UIView {
+    return contentView
+  }
+}
