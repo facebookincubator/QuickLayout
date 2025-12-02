@@ -78,7 +78,6 @@ let package = Package(
       dependencies: [
         "QuickLayoutMacro",
         .swiftSyntaxMacrosTestSupport,
-        .macroTesting,
       ],
       path: "Sources/QuickLayout/QuickLayoutMacroTests"
     )
@@ -93,6 +92,4 @@ extension Target.Dependency {
   static let swiftSyntaxBuilder = Self.product(name: "SwiftSyntaxBuilder", package: "swift-syntax")
   static let swiftParserDiagnostics = Self.product(name: "SwiftParserDiagnostics", package: "swift-syntax")
   static let swiftSyntaxMacrosTestSupport = Self.product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
-  // swift-macro-testing
-  static let macroTesting = Self.product(name: "MacroTesting", package: "swift-macro-testing")
 }

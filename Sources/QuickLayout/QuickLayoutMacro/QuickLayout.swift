@@ -8,6 +8,7 @@
 import SwiftSyntax
 import SwiftSyntaxMacros
 import SwiftDiagnostics
+import Foundation
 
 enum QuickLayoutDiagnostic: DiagnosticMessage {
   case missingRequiredImplementation(functionName: String, requiredCall: String)
@@ -91,7 +92,7 @@ public struct QuickLayout: ExtensionMacro, MemberMacro, MemberAttributeMacro {
           let functionBody = memberFunction.body?.statements.description ?? ""
 
           // 检查方法体中是否包含必要的调用
-          if functionBody.contains(requiredCall) {
+          if (functionBody as NSString).contains(requiredCall) {
             // 已经包含必要的实现，跳过
             continue
           } else {
