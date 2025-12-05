@@ -5,10 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import QuickLayoutMacro
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
+#if canImport(QuickLayoutMacro)
+@testable import QuickLayoutMacro
 
 // patternlint-disable meta-subclass-view
 
@@ -476,3 +477,4 @@ class QuickLayoutTests: XCTestCase {
     )
   }
 }
+#endif
