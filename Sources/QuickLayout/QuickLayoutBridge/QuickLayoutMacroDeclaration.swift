@@ -17,8 +17,10 @@
 @attached(extension, conformances: HasBody)
 public macro QuickLayout() = #externalMacro(module: "QuickLayoutMacro", type: "QuickLayout")
 
+#if compiler(>=6)
 /**
  This macro is an implementation detail of @QuickLayout. It is not intended to be used directly.
 */
 @attached(body)
 public macro _QuickLayoutInjection(_ value: String) = #externalMacro(module: "QuickLayoutMacro", type: "QuickLayoutInjection")
+#endif

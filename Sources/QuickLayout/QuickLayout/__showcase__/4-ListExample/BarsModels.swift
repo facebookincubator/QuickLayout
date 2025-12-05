@@ -14,7 +14,11 @@ struct BarModel {
   let description: String
   let shareURL: URL
 }
+#if compiler(>=6.1)
 nonisolated extension BarModel: Hashable {}
+#else
+extension BarModel: Hashable {}
+#endif
 
 // swiftlint:disable force_unwrapping
 actor BarsStore {

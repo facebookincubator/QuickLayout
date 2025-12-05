@@ -5,10 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import QuickLayoutMacro
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
+#if canImport(QuickLayoutMacro)
+@testable import QuickLayoutMacro
 
 // patternlint-disable meta-subclass-view
 
@@ -117,6 +118,7 @@ class QuickLayoutTests: XCTestCase {
   }
 
   func testApplicableMethodsInjectQuickLayoutBridgeementation() throws {
+#if compiler(>=6)
     assertMacroExpansion(
       #"""
       @QuickLayout
@@ -171,6 +173,78 @@ class QuickLayoutTests: XCTestCase {
       macros: testMacros,
       indentationWidth: .spaces(2)
     )
+#else
+    assertMacroExpansion(
+      #"""
+      @QuickLayout
+      class TestView: UIView {
+        var body: Layout {
+          EmptyLayout()
+        }
+
+        public override func willMove(toWindow newWindow: UIWindow?) {
+          super.willMove(toWindow: newWindow)
+          someUniqueWillMoveToWindowLogic()
+        }
+
+        public override func layoutSubviews() {
+          super.layoutSubviews()
+          someUniqueLayoutSubviewsLogic()
+        }
+      }
+      """#,
+      expandedSource:
+        #"""
+        class TestView: UIView {
+          @LayoutBuilder
+          var body: Layout {
+            EmptyLayout()
+          }
+
+          public override func willMove(toWindow newWindow: UIWindow?) {
+            super.willMove(toWindow: newWindow)
+            someUniqueWillMoveToWindowLogic()
+          }
+
+          public override func layoutSubviews() {
+            super.layoutSubviews()
+            someUniqueLayoutSubviewsLogic()
+          }
+
+          public override func sizeThatFits(_ size: CGSize) -> CGSize {
+            return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
+          }
+
+          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+            return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
+          }
+        }
+
+        extension TestView: HasBody {
+        }
+        """#,
+      diagnostics: [
+        .init(
+          message: """
+          Method 'willMove' is missing required implementation call. Below Swift 6.0, you must manually add the following call:
+          _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
+          """,
+          line: 7,
+          column: 3
+        ),
+        .init(
+          message: """
+          Method 'layoutSubviews' is missing required implementation call. Below Swift 6.0, you must manually add the following call:
+          _QuickLayoutViewImplementation.layoutSubviews(self)
+          """,
+          line: 12,
+          column: 3
+        ),
+      ],
+      macros: testMacros,
+      indentationWidth: .spaces(2)
+    )
+#endif
   }
 
   func testTypeScopedFunctionsDoNotConflict() throws {
@@ -476,3 +550,4 @@ class QuickLayoutTests: XCTestCase {
     )
   }
 }
+#endif
