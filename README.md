@@ -2,7 +2,7 @@
 
 QuickLayout is a declarative layout library for iOS, designed to work seamlessly with UIKit. It is lightning-fast, incredibly simple to use, and offers a powerful set of modern layout primitives.
 
-QuickLayout's API will feel natural to many iOS engineers. With a small and well tested codebase, it is production ready. QuickLayout has significant usage across many of Instagram's core features.
+QuickLayout's API will feel natural to many iOS engineers. With a small and well tested codebase, it is production ready and the recommended declarative layout solution for Instagram.
 
 ### Code Sample
 
