@@ -27,7 +27,7 @@ let package = Package(
     ),
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-syntax.git", from: "600.0.0"),
+    .package(url: "https://github.com/apple/swift-syntax.git", from: "600.0.0")
   ],
   targets: [
     .target(
@@ -79,6 +79,6 @@ let package = Package(
         .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
       ],
       path: "Sources/QuickLayout/QuickLayoutMacroTests"
-    )
+    ),
   ]
 )
