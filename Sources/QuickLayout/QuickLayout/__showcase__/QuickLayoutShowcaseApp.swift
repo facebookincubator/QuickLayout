@@ -37,7 +37,11 @@ struct ShowcaseApp: View {
       [
         StateManagementView.self
       ]),
-
+    SCSection(
+      "Animations",
+      [
+        UpdatingWithAnimationView.self
+      ]),
     SCSection(
       "Alignment",
       [
