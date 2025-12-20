@@ -119,20 +119,68 @@ private struct ShowcaseViewRepresentable: UIViewRepresentable {
   }
 }
 
+private struct ShowcaseViewControllerRepresentable: UIViewControllerRepresentable {
+
+  let viewControllerType: UIViewController.Type
+
+  init(_ viewControllerType: UIViewController.Type) {
+    self.viewControllerType = viewControllerType
+  }
+
+  func makeUIViewController(context: Context) -> some UIViewController {
+    viewControllerType.init() as UIViewController
+  }
+
+  func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+  }
+}
+
+private enum ShowcaseType {
+  case view(UIView.Type)
+  case viewController(UIViewController.Type)
+
+  var underlyingType: Any.Type {
+    switch self {
+    case let .view(viewType):
+      return viewType
+    case let .viewController(viewControllerType):
+      return viewControllerType
+    }
+  }
+}
+
+private protocol ShowcaseTypeConvertable {
+  static var showcaseType: ShowcaseType { get }
+}
+
+extension UIView: ShowcaseTypeConvertable {
+  fileprivate static var showcaseType: ShowcaseType { .view(Self.self) }
+}
+
+extension UIViewController: ShowcaseTypeConvertable {
+  fileprivate static var showcaseType: ShowcaseType { .viewController(Self.self) }
+}
+
 private struct SCShowcase: Identifiable, Hashable {
   let id = UUID()
 
-  let viewType: UIView.Type
+  let showcaseType: ShowcaseType
   let label: String
 
-  init(viewType: UIView.Type) {
-    self.viewType = viewType
-    self.label = String(describing: viewType).splittingCamelCase()
+  init(showcaseType: ShowcaseType) {
+    self.showcaseType = showcaseType
+    self.label = String(describing: showcaseType.underlyingType).splittingCamelCase()
   }
 
   @MainActor
+  @ViewBuilder
   func view() -> some View {
-    ShowcaseViewRepresentable(viewType)
+    switch showcaseType {
+    case let .view(viewType):
+      ShowcaseViewRepresentable(viewType)
+    case let .viewController(viewControllerType):
+      ShowcaseViewControllerRepresentable(viewControllerType)
+    }
   }
 
   static func == (lhs: SCShowcase, rhs: SCShowcase) -> Bool {
@@ -146,7 +194,13 @@ private struct SCShowcase: Identifiable, Hashable {
 
 private extension String {
   func splittingCamelCase() -> String {
-    let stripped = self.hasSuffix("View") ? String(self.dropLast(4)) : self
+    let stripped = self.hasSuffix("View")
+      ? String(self.dropLast(4))
+      : (
+        self.hasSuffix("ViewController")
+          ? String(self.dropLast(14))
+          : self
+      )
 
     // Split by uppercase letters
     let words = stripped.reduce("") { result, char in
@@ -168,9 +222,9 @@ private struct SCSection: Identifiable, Hashable {
   let showscases: [SCShowcase]
   let title: String
 
-  init(_ title: String, _ showcases: [UIView.Type]) {
+  init(_ title: String, _ showcases: [ShowcaseTypeConvertable.Type]) {
     self.title = title
-    self.showscases = showcases.map { SCShowcase(viewType: $0) }
+    self.showscases = showcases.map { SCShowcase(showcaseType: $0.showcaseType) }
   }
 }
 
