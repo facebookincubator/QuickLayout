@@ -43,6 +43,11 @@ struct ShowcaseApp: View {
         UpdatingWithAnimationView.self
       ]),
     SCSection(
+      "List",
+      [
+        BarsListViewController.self
+      ]),
+    SCSection(
       "Alignment",
       [
         AlignmentGuidesView.self,
