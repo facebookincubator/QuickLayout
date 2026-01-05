@@ -53,7 +53,7 @@ struct AlignmentGuides: Sequence {
 // MARK: - AlignmentGuidesResolver
 
 struct AlignmentGuidesResolver {
-  private static let defaultAlignentIDs: Set<AnyAlignmentID> = [
+  private static let defaultAlignmentIDs: Set<AnyAlignmentID> = [
     VerticalAlignment.top.alignmentID,
     VerticalAlignment.center.alignmentID,
     VerticalAlignment.bottom.alignmentID,
@@ -101,7 +101,7 @@ struct AlignmentGuidesResolver {
     for i in 0..<children.count {
       for (alignment, value) in children[i].layout.dimensions.alignmentGuides {
         // Don't propagate default alignment guides
-        guard !AlignmentGuidesResolver.defaultAlignentIDs.contains(alignment) else { continue }
+        guard !AlignmentGuidesResolver.defaultAlignmentIDs.contains(alignment) else { continue }
         let position = children[i].position
         let value = value(children[i].layout.dimensions)
         alignmentGuideAggregation[alignment, default: []].append { (dimensions: ElementDimensions) -> CGFloat in
