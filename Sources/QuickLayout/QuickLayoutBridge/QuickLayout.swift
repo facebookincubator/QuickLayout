@@ -298,11 +298,13 @@ extension StackElement {
 extension UIView {
 
   /// Adds the given views as subviews of this view.
-  public func addSubviews(@FastArrayBuilder<UIView> views: () -> [UIView]) {
+  @discardableResult
+  public func addSubviews(@FastArrayBuilder<UIView> views: () -> [UIView]) -> UIView {
     let viewList = views
     for v in viewList() {
       addSubview(v)
     }
+    return self
   }
 }
 
