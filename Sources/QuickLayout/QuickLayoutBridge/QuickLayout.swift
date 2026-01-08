@@ -76,7 +76,7 @@ public func Grid(
   alignment: Alignment = .center,
   horizontalSpacing: CGFloat = 0,
   verticalSpacing: CGFloat = 0,
-  @FastArrayBuilder<GridRowElement> rows: () -> [GridRowElement] = { [] },
+  @FastArrayBuilder<GridRowElement> rows: () -> [GridRowElement] = { [] }
 ) -> Element & Layout {
   GridElement(rows: rows(), alignment: alignment, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing)
 }
