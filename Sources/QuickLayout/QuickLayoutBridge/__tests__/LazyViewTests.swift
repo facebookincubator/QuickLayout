@@ -145,6 +145,63 @@ final class LazyViewTests: XCTestCase {
     XCTAssertTrue(views[0] === expectedView)
   }
 
+  // MARK: - LeafElement Conformance Tests
+
+  func testLazyViewConformsToLeafElement() {
+    let lazyView = LazyView { UIView() }
+
+    // LazyView<UIView> should conform to LeafElement since UIView conforms to LeafElement
+    let leafElement: any LeafElement = lazyView
+    XCTAssertNotNil(leafElement)
+  }
+
+  func testBackingViewLoadsView() {
+    var initializerCallCount = 0
+    let expectedView = UIView()
+    let lazyView = LazyView {
+      initializerCallCount += 1
+      return expectedView
+    }
+
+    XCTAssertEqual(initializerCallCount, 0)
+
+    let backingView = lazyView.backingView()
+
+    XCTAssertEqual(initializerCallCount, 1)
+    XCTAssertTrue(lazyView.isLoaded)
+    XCTAssertTrue(backingView === expectedView)
+  }
+
+  func testBackingViewReturnsCorrectView() {
+    let expectedView = UIView()
+    let lazyView = LazyView { expectedView }
+
+    XCTAssertTrue(lazyView.backingView() === expectedView)
+  }
+
+  // MARK: - Resizable Modifier Tests (via LeafElement)
+
+  func testLazyViewSupportsResizableModifier() {
+    let lazyView = LazyView { UIView() }
+
+    // Since LazyView conforms to LeafElement, it should support resizable()
+    let resizableElement = lazyView.resizable()
+
+    XCTAssertNotNil(resizableElement)
+  }
+
+  func testLazyViewResizableWithAxis() {
+    let lazyView = LazyView { UIView() }
+
+    let horizontalResizable = lazyView.resizable(axis: .horizontal)
+    let verticalResizable = lazyView.resizable(axis: .vertical)
+    let bothAxesResizable = lazyView.resizable(axis: [.horizontal, .vertical])
+
+    XCTAssertNotNil(horizontalResizable)
+    XCTAssertNotNil(verticalResizable)
+    XCTAssertNotNil(bothAxesResizable)
+  }
+
   // MARK: - Layout Integration Tests
 
   func testLazyViewInHStack() {
@@ -186,6 +243,7 @@ final class LazyViewTests: XCTestCase {
 
     let layout = HStack {
       lazyView
+        .resizable()
         .frame(width: 50, height: 50)
     }
 
@@ -321,6 +379,17 @@ final class LazyViewTests: XCTestCase {
     XCTAssertEqual(button.title(for: .normal), "Test")
   }
 
+  func testLazyButtonResizable() {
+    let lazyButton = LazyView {
+      UIButton(type: .system)
+    }
+
+    // UIButton is a UIView, so LazyView<UIButton> should conform to LeafElement
+    let resizableElement = lazyButton.resizable()
+
+    XCTAssertNotNil(resizableElement)
+  }
+
   // MARK: - UILabel Tests
 
   func testLazyViewWithUILabel() {
@@ -336,5 +405,16 @@ final class LazyViewTests: XCTestCase {
 
     XCTAssertTrue(lazyLabel.isLoaded)
     XCTAssertEqual(label.text, "Hello")
+  }
+
+  // MARK: - Expand Modifier Tests (via LeafElement)
+
+  func testLazyViewSupportsExpandModifier() {
+    let lazyView = LazyView { UIView() }
+
+    // Since LazyView conforms to LeafElement, it should support expand()
+    let expandedElement = lazyView.expand(by: CGSize(width: 10, height: 10))
+
+    XCTAssertNotNil(expandedElement)
   }
 }

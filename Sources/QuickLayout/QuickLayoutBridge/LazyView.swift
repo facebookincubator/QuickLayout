@@ -89,3 +89,9 @@ extension LazyView: Element where ViewType: Element {
     loadIfNeeded().quick_extractViewsIntoArray(&views)
   }
 }
+
+extension LazyView: LeafElement where ViewType: LeafElement {
+  public func backingView() -> UIView? {
+    loadIfNeeded().backingView()
+  }
+}
