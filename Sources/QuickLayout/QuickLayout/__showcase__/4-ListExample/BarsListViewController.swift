@@ -10,13 +10,15 @@ import UIKit
 final class BarsListViewController: UIViewController {
   private var dataSource: UICollectionViewDiffableDataSource<Int, BarModel>?
 
-  private lazy var collectionView = {
+  private lazy var layout = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
     layout.minimumLineSpacing = 0
     layout.minimumLineSpacing = 0
-    // patternlint-disable-next-line ig-avoid-uiscreen-bounds-swift
-    layout.itemSize = UIScreen.main.bounds.size
+    return layout
+  }()
+
+  private lazy var collectionView = {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.register(BarCardViewCell.self, forCellWithReuseIdentifier: BarCardViewCell.reuseIdentifier)
 
@@ -35,6 +37,13 @@ final class BarsListViewController: UIViewController {
 
   override func loadView() {
     self.view = collectionView
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    if layout.itemSize != view.bounds.size {
+      layout.itemSize = view.bounds.size
+    }
   }
 
   func configureDataSource() {
