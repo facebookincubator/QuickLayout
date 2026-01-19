@@ -5,4 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#if canImport(QuickLayoutBridge)
 @_exported import QuickLayoutBridge
+#endif
