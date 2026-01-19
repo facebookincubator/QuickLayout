@@ -154,6 +154,7 @@ private enum ShowcaseType {
   }
 }
 
+@MainActor
 private protocol ShowcaseTypeConvertable {
   static var showcaseType: ShowcaseType { get }
 }
@@ -199,13 +200,12 @@ private struct SCShowcase: Identifiable, Hashable {
 
 private extension String {
   func splittingCamelCase() -> String {
-    let stripped = self.hasSuffix("View")
+    let stripped =
+      self.hasSuffix("View")
       ? String(self.dropLast(4))
-      : (
-        self.hasSuffix("ViewController")
-          ? String(self.dropLast(14))
-          : self
-      )
+      : (self.hasSuffix("ViewController")
+        ? String(self.dropLast(14))
+        : self)
 
     // Split by uppercase letters
     let words = stripped.reduce("") { result, char in
@@ -222,6 +222,7 @@ private extension String {
   }
 }
 
+@MainActor
 private struct SCSection: Identifiable, Hashable {
   let id = UUID()
   let showscases: [SCShowcase]
