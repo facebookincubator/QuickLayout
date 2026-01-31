@@ -17,7 +17,7 @@ class MyCellView: UIView {
 
   var body: Layout {
     HStack {
-      VStack(alignment: leading) {
+      VStack(alignment: .leading) {
         titleLabel
         Spacer(4)
         subtitleLabel
