@@ -65,6 +65,51 @@ class QuickLayoutTests: XCTestCase {
     )
   }
 
+  func testAccessModifierMacroExpansion() throws {
+    assertMacroExpansion(
+      #"""
+      @QuickLayout
+      public class TestView: UIView {
+        var body: Layout {
+          EmptyLayout()
+        }
+      }
+      """#,
+      expandedSource:
+        #"""
+        public class TestView: UIView {
+          @LayoutBuilder
+          var body: Layout {
+            EmptyLayout()
+          }
+
+          public override func willMove(toWindow newWindow: UIWindow?) {
+            super.willMove(toWindow: newWindow)
+            _QuickLayoutViewImplementation.willMove(self, toWindow: newWindow)
+          }
+
+          public override func layoutSubviews() {
+            super.layoutSubviews()
+            _QuickLayoutViewImplementation.layoutSubviews(self)
+          }
+
+          public override func sizeThatFits(_ size: CGSize) -> CGSize {
+            return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
+          }
+
+          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+            return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
+          }
+        }
+
+        public extension TestView: HasBody {
+        }
+        """#,
+      macros: testMacros,
+      indentationWidth: .spaces(2)
+    )
+  }
+
   func testApplicableMethodsDeferToProvidedImplementation() throws {
     assertMacroExpansion(
       #"""
