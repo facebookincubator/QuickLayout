@@ -18,9 +18,15 @@ public struct QuickLayout: ExtensionMacro, MemberMacro, MemberAttributeMacro {
     conformingTo protocols: [TypeSyntax],
     in context: some MacroExpansionContext
   ) throws -> [ExtensionDeclSyntax] {
+    let accessPrefix: String
+    if let modifier = declaration.accessModifier {
+      accessPrefix = "\(modifier) "
+    } else {
+      accessPrefix = ""
+    }
     let declSyntax: DeclSyntax =
       """
-      extension \(type.trimmed): HasBody {}
+      \(raw: accessPrefix)extension \(type.trimmed): HasBody {}
       """
     guard let extensionSyntax = declSyntax.as(ExtensionDeclSyntax.self) else {
       return []

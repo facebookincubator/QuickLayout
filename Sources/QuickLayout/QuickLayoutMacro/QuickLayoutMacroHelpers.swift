@@ -8,11 +8,33 @@
 import SwiftSyntax
 import SwiftSyntaxMacros
 
+private let accessModifierNames: Set<String> = ["public", "private", "internal", "fileprivate"]
+
 extension DeclGroupSyntax {
   var memberFunctions: [FunctionDeclSyntax] {
     return memberBlock.members.compactMap {
       $0.decl.function
     }
+  }
+
+  var accessModifier: String? {
+    let modifiers: DeclModifierListSyntax?
+    switch self {
+    case let decl as ClassDeclSyntax:
+      modifiers = decl.modifiers
+    case let decl as StructDeclSyntax:
+      modifiers = decl.modifiers
+    case let decl as EnumDeclSyntax:
+      modifiers = decl.modifiers
+    case let decl as ActorDeclSyntax:
+      modifiers = decl.modifiers
+    default:
+      modifiers = nil
+    }
+    guard let modifiers else { return nil }
+    return modifiers.lazy
+      .map { $0.name.text }
+      .first { accessModifierNames.contains($0) }
   }
 }
 
