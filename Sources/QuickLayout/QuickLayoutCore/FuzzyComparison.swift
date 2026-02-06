@@ -20,7 +20,7 @@ import Foundation
 struct Fuzzy {
 
   @inlinable
-  static func compare<T: FloatingPoint>(_ this: T, equalTo other: T, tolerance: T = 0.0001) -> Bool {
+  static func compare<T: FloatingPoint>(_ this: T, equalTo other: T, tolerance: T = T.defaultTolerance) -> Bool {
     if this.isNaN || other.isNaN { return false }
     if this == other { return true }
     if this.isInfinite || other.isInfinite { return this == other }
@@ -28,22 +28,27 @@ struct Fuzzy {
   }
 
   @inlinable
-  static func compare<T: FloatingPoint>(_ this: T, lessThan other: T, tolerance: T = 0.0001) -> Bool {
+  static func compare<T: FloatingPoint>(_ this: T, lessThan other: T, tolerance: T = T.defaultTolerance) -> Bool {
     this < other && !Fuzzy.compare(this, equalTo: other, tolerance: tolerance)
   }
 
   @inlinable
-  static func compare<T: FloatingPoint>(_ this: T, greaterThan other: T, tolerance: T = 0.0001) -> Bool {
+  static func compare<T: FloatingPoint>(_ this: T, greaterThan other: T, tolerance: T = T.defaultTolerance) -> Bool {
     this > other && !Fuzzy.compare(this, equalTo: other, tolerance: tolerance)
   }
 
   @inlinable
-  static func compare<T: FloatingPoint>(_ this: T, lessThanOrEqual other: T, tolerance: T = 0.0001) -> Bool {
+  static func compare<T: FloatingPoint>(_ this: T, lessThanOrEqual other: T, tolerance: T = T.defaultTolerance) -> Bool {
     this < other || Fuzzy.compare(this, equalTo: other, tolerance: tolerance)
   }
 
   @inlinable
-  static func compare<T: FloatingPoint>(_ this: T, greaterThanOrEqual other: T, tolerance: T = 0.0001) -> Bool {
+  static func compare<T: FloatingPoint>(_ this: T, greaterThanOrEqual other: T, tolerance: T = T.defaultTolerance) -> Bool {
     this > other || Fuzzy.compare(this, equalTo: other, tolerance: tolerance)
   }
+}
+
+private extension FloatingPoint {
+  // The default tolerance is 0.0001
+  static var defaultTolerance: Self { Self(1) / Self(10000) }
 }
