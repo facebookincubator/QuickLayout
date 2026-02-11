@@ -344,7 +344,6 @@ final class GridLayoutExampleView: UIView {
         }
       }
       .padding(.horizontal, 16)
-      .frame(width: 400)
 
       Spacer()
 

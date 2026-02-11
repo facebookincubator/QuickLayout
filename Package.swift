@@ -14,6 +14,7 @@ let package = Package(
   name: "QuickLayout",
   platforms: [
     .iOS(.v15),
+    .macCatalyst(.v15),
     .macOS(.v10_15),
   ],
   products: [
@@ -34,7 +35,7 @@ let package = Package(
       name: "QuickLayout",
       dependencies: [
         "QuickLayoutMacro",
-        .target(name: "QuickLayoutBridge", condition: .when(platforms: [.iOS])),
+        .target(name: "QuickLayoutBridge", condition: .when(platforms: [.iOS, .macCatalyst])),
       ],
       path: "Sources/QuickLayout/QuickLayout",
       exclude: [
@@ -64,7 +65,7 @@ let package = Package(
       name: "QuickLayoutBridge",
       dependencies: [
         "FastResultBuilder",
-        .target(name: "QuickLayoutCore", condition: .when(platforms: [.iOS])),
+        .target(name: "QuickLayoutCore", condition: .when(platforms: [.iOS, .macCatalyst])),
       ],
       path: "Sources/QuickLayout/QuickLayoutBridge",
       exclude: [
