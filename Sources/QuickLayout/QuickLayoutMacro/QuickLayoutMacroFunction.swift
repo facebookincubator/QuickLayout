@@ -74,7 +74,7 @@ extension QuickLayoutMacroFunction {
     case .quick_flexibility:
       """
 
-      public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+      public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> QuickLayoutCore.Flexibility {
         return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
       }
 

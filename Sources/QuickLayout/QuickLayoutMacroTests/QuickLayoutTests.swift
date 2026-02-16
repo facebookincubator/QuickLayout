@@ -52,7 +52,7 @@ class QuickLayoutTests: XCTestCase {
             return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
           }
 
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> QuickLayoutCore.Flexibility {
             return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
           }
         }
@@ -78,7 +78,7 @@ class QuickLayoutTests: XCTestCase {
           return uniqueSizeValue
         }
 
-        public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+        public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> QuickLayoutCore.Flexibility {
           return uniqueFlexibilityValue
         }
       }
@@ -95,7 +95,7 @@ class QuickLayoutTests: XCTestCase {
             return uniqueSizeValue
           }
 
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> QuickLayoutCore.Flexibility {
             return uniqueFlexibilityValue
           }
 
@@ -162,7 +162,7 @@ class QuickLayoutTests: XCTestCase {
             return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
           }
 
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> QuickLayoutCore.Flexibility {
             return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
           }
         }
@@ -215,7 +215,7 @@ class QuickLayoutTests: XCTestCase {
             return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
           }
 
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> QuickLayoutCore.Flexibility {
             return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
           }
         }
@@ -268,7 +268,7 @@ class QuickLayoutTests: XCTestCase {
             return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
           }
 
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> QuickLayoutCore.Flexibility {
             return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
           }
         }
@@ -321,7 +321,7 @@ class QuickLayoutTests: XCTestCase {
             return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
           }
 
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> QuickLayoutCore.Flexibility {
             return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
           }
         }
@@ -367,7 +367,7 @@ class QuickLayoutTests: XCTestCase {
             return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
           }
 
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> QuickLayoutCore.Flexibility {
             return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
           }
         }
@@ -420,7 +420,7 @@ class QuickLayoutTests: XCTestCase {
             return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
           }
 
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> QuickLayoutCore.Flexibility {
             return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
           }
         }
@@ -465,7 +465,7 @@ class QuickLayoutTests: XCTestCase {
             return _QuickLayoutViewImplementation.sizeThatFits(self, size: size) ?? super.sizeThatFits(size)
           }
 
-          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> Flexibility {
+          public override func quick_flexibility(for axis: QuickLayoutCore.Axis) -> QuickLayoutCore.Flexibility {
             return _QuickLayoutViewImplementation.quick_flexibility(self, for: axis) ?? super.quick_flexibility(for: axis)
           }
         }
