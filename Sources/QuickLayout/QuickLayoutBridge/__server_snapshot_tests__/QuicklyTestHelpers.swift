@@ -7,13 +7,14 @@
 
 import FBServerSnapshotTestCase
 import Foundation
+import METAUIColorSwift
 import QuickLayoutBridge
 
 struct ColorPallete {
-  static let blue = UIColor(hex: 0x4793AF)
-  static let yellow = UIColor(hex: 0xFFC470)
-  static let orange = UIColor(hex: 0xDD5746)
-  static let red = UIColor(hex: 0x8B322C)
+  static let blue = UIColor(rgb: 0x4793AF)
+  static let yellow = UIColor(rgb: 0xFFC470)
+  static let orange = UIColor(rgb: 0xDD5746)
+  static let red = UIColor(rgb: 0x8B322C)
 }
 
 enum SizeType {
@@ -123,24 +124,6 @@ func generateTestImage(with text: String, size: CGSize, backgroundColor: UIColor
     label.layer.render(in: context.cgContext)
   }
   return image
-}
-
-private extension UIColor {
-  convenience init(red: Int, green: Int, blue: Int) {
-    assert(red >= 0 && red <= 255, "Invalid red component")
-    assert(green >= 0 && green <= 255, "Invalid green component")
-    assert(blue >= 0 && blue <= 255, "Invalid blue component")
-
-    self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
-  }
-
-  convenience init(hex: Int) {
-    self.init(
-      red: (hex >> 16) & 0xFF,
-      green: (hex >> 8) & 0xFF,
-      blue: hex & 0xFF
-    )
-  }
 }
 
 class TestPlaceholderView: UIView {
