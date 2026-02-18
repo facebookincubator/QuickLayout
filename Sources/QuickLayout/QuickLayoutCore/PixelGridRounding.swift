@@ -11,6 +11,7 @@ import UIKit
 private struct ScreenScale {
   static let value: CGFloat = {
     var scale: CGFloat = 1.0
+    #if !os(visionOS)
     if Thread.isMainThread {
       MainActor.assumeIsolated { // patternlint-disable-line swift-mainactor-assumeisolated
         scale = UIScreen.main.scale
@@ -20,6 +21,7 @@ private struct ScreenScale {
         scale = UIScreen.main.scale
       }
     }
+    #endif
     return scale
   }()
 }
