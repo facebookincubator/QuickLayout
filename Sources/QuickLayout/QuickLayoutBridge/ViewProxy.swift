@@ -102,13 +102,17 @@ public extension UILabel {
       return sizingLabel.quick_layoutThatFits(constrainingSize).size
     }
   }
+  // Separate sizing label for attributed strings to prevent UIKit's internal
+  // paragraph style caching from leaking stale properties (e.g. minimumLineHeight)
+  // to subsequent text-based proxy calls on the shared sizingLabel.
+  private static let attributedSizingLabel = UILabel()
   static func proxy(for attributedText: NSAttributedString, numberOfLines: Int = 1) -> ViewProxy {
     return ViewProxy(flexibility: .partial) { constrainingSize in
       assert(Thread.isMainThread, "UILabel ViewProxy can be used only on the main thread. Prefer using FOALabel.swift if you need to have background safe advance sizing.")
-      sizingLabel.text = nil
-      sizingLabel.attributedText = attributedText
-      sizingLabel.numberOfLines = numberOfLines
-      return sizingLabel.quick_layoutThatFits(constrainingSize).size
+      attributedSizingLabel.text = nil
+      attributedSizingLabel.attributedText = attributedText
+      attributedSizingLabel.numberOfLines = numberOfLines
+      return attributedSizingLabel.quick_layoutThatFits(constrainingSize).size
     }
   }
 }
