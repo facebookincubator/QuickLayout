@@ -51,6 +51,7 @@ module.exports = {
         'layout/padding',
         'layout/fixed-frame',
         'layout/flexible-frame',
+        'layout/constrained-size',
         'layout/resizable',
         'layout/expandable',
         'layout/offset',

@@ -26,6 +26,10 @@ When using this method, you must provide at least one size constraint.
 The `Flexible Frame` modifier does not directly change the size of its child view but acts like a "picture frame." It proposes the size to the child view, but the child may choose to have a smaller size. Therefore, the `Flexible Frame` modifier uses the `alignment` parameter to position the child within its own size.
 :::
 
+:::tip Consider constrainedSize
+If you only need `maxWidth`/`maxHeight` without an invisible space around the child, consider using the [`constrainedSize`](constrained-size.mdx) modifier instead. It clamps the proposed size but adopts the child's actual size as its own, so it does not leave an invisible gap.
+:::
+
 ### Examples
 
 ```swift

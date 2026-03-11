@@ -1,0 +1,48 @@
+---
+id: constrained-size
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+# Constrained Size
+
+```swift
+extension Element {
+  func constrainedSize(
+    maxWidth: CGFloat? = nil,
+    maxHeight: CGFloat? = nil
+  ) -> Element & Layout
+}
+```
+
+The Constrained Size modifier clamps the parent's proposed size to the specified maximum constraints before passing it to the child. The child's actual size becomes the modifier's own size.
+
+If you omit a constraint (or pass nil), the proposed size for that axis is passed through unchanged.
+
+:::caution Difference from Flexible Frame
+Unlike `.frame(maxWidth:maxHeight:)`, the Constrained Size modifier does **not** create an invisible frame around the child.
+The Constrained Size modifier instead adopts the child's actual size, so there is no invisible gap between the modifier's bounds and the child view.
+:::
+
+### Examples
+
+```swift
+var body: Layout {
+  HStack {
+    profileImageView
+      .resizable()
+      .constrainedSize(maxWidth: 80, maxHeight: 80)
+    label
+  }
+}
+```
+
+```swift
+var body: Layout {
+  VStack {
+    // Limits width without adding invisible padding
+    contentView
+      .constrainedSize(maxWidth: 300)
+  }
+}
+```

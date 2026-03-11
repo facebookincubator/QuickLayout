@@ -195,6 +195,14 @@ public extension Element {
     FixedSizeElement(child: self, horizontal: axis.contains(.horizontal), vertical: axis.contains(.vertical))
   }
 
+  /// Clamps the parent's proposed size to the specified constraints and
+  /// acquires the child's actual size as its own.
+  /// Similar to Flexible Frame with maxWidth and maxHeight, but does not
+  /// leave an invisible space around the child view.
+  func constrainedSize(maxWidth: CGFloat? = nil, maxHeight: CGFloat? = nil) -> Element & Layout {
+    ConstrainedSizeElement(child: self, maxWidth: maxWidth, maxHeight: maxHeight)
+  }
+
   /// Sets the priority by which a parent V/HStack should allocate space to this child.
   /// A view's default priority is 0, which distributes available space evenly to all sibling views.
   /// Set a higher priority to measure the view first with a larger portion of available space.
