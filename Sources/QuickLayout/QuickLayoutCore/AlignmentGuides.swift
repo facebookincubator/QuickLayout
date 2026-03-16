@@ -77,7 +77,7 @@ struct AlignmentGuidesResolver {
       alignmentGuides[alignment] = { (dimensions: ElementDimensions) -> CGFloat in
         // We need to provide alignment relative to position -- alignment guides
         // keep their originating element's reference frame. Child layout dimensions
-        // are used so that alignment guides recieve the dimensions of the element
+        // are used so that alignment guides receive the dimensions of the element
         // they're being applied to.
         switch alignment.axis {
         case .horizontal: value(childDimensions) + position.x
