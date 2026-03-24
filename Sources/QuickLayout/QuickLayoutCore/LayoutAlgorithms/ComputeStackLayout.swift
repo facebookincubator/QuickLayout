@@ -58,8 +58,10 @@ private func layoutGroup(indices: [Int], layouts: inout [LayoutNode], main: CGFl
 
 @inline(__always)
 private func shouldRemeasure(_ node: LayoutNode, children: [Element], mainAxis: Axis) -> Bool {
+  let count = min(children.count, node.children.count)
+  guard count > 0 else { return false }
   let firstSize: CGFloat = node.children.first?.layout.size.cross(for: mainAxis) ?? -1
-  for index in (0...children.count - 1) {
+  for index in (0...count - 1) {
     if firstSize != node.children[index].layout.size.cross(for: mainAxis) && !children[index].quickInternal_isSpacer() {
       return true
     }
