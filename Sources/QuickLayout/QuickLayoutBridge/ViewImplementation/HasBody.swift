@@ -58,7 +58,7 @@ extension UICollectionViewCell {
   override var isBodySizingEnabled: Bool {
     guard BodyCoordinationExperiments.preventUnusedCollectionViewCellSizing else { return true }
     // Disable self sizing if the collection view layout will request sizing info unnecessarily.
-    // When the preferred attribute selector is overriden from the base class, we need to provide
+    // When the preferred attribute selector is overridden from the base class, we need to provide
     // sizing info as this means the layout may need the sizing. UITableView does not have the same
     // problem, this is specific to UICollectionView.
     let preferredFittingSelector = #selector(UICollectionViewLayout.shouldInvalidateLayout(forPreferredLayoutAttributes:withOriginalAttributes:))
