@@ -10,7 +10,7 @@ import SwiftSyntaxMacrosTestSupport
 import XCTest
 
 #if canImport(QuickLayoutMacro)
-@testable import QuickLayoutMacro
+import QuickLayoutMacro
 
 // patternlint-disable meta-subclass-view
 
