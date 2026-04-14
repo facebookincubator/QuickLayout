@@ -28,8 +28,8 @@ extension DeclSyntaxProtocol {
 
 extension FunctionDeclSyntax {
   func parameterName(at index: Int) -> String {
-    let paramaterSyntax = signature.parameterClause.parameters.map { $0 }[index]
-    return paramaterSyntax.internalName.text
+    let parameterSyntax = signature.parameterClause.parameters.map { $0 }[index]
+    return parameterSyntax.internalName.text
   }
 
   var identity: QuickLayoutFunctionIdentity {
