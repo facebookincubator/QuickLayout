@@ -5,12 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// Disabled during swift-format 6.3 rollout, feel free to remove:
-// swift-format-ignore-file: OrderedImports
-
 import FBServerSnapshotTestCase
 import FBTestImageGenerator
-
 @testable import QuickLayoutBridge
 @testable import QuickLayoutCore
 
