@@ -201,10 +201,10 @@ private struct SCShowcase: Identifiable, Hashable {
 private extension String {
   func splittingCamelCase() -> String {
     let stripped =
-      self.hasSuffix("View")
-      ? String(self.dropLast(4))
-      : (self.hasSuffix("ViewController")
-        ? String(self.dropLast(14))
+      hasSuffix("View")
+      ? String(dropLast(4))
+      : (hasSuffix("ViewController")
+        ? String(dropLast(14))
         : self)
 
     // Split by uppercase letters
